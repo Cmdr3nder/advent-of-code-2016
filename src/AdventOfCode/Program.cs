@@ -1,4 +1,5 @@
 ﻿using AdventOfCode.DayOne.EasterNavigation;
+using AdventOfCode.DayTwo;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +27,10 @@ namespace AdventOfCode
         public static MenuRunner ConstructAdventMenu()
         {
             var programs = new List<IProgram>();
-            programs.Add(ConstructDayOne());
+            //programs.Add(ConstructDayOne());
+            //programs.Add(ConstructDayTwo());
+            programs.Add(new EasterNavigation());
+            programs.Add(new BunnyBathroom());
             programs.Add(new QuitMenu());
             return new MenuRunner("Select Advent Day", "Select Advent Day:", programs);
         }
@@ -37,6 +41,14 @@ namespace AdventOfCode
             programs.Add(new EasterNavigation());
             programs.Add(new QuitMenu());
             return new MenuRunner("Day One", "Select Challenge:", programs);
+        }
+
+        public static MenuRunner ConstructDayTwo()
+        {
+            var programs = new List<IProgram>();
+            programs.Add(new BunnyBathroom());
+            programs.Add(new QuitMenu());
+            return new MenuRunner("Day Two", "Select Challenge:", programs);
         }
     }
 }

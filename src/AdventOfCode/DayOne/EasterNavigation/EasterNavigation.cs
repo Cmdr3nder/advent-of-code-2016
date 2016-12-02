@@ -187,7 +187,7 @@ namespace AdventOfCode.DayOne.EasterNavigation
 
         public override string ToString()
         {
-            return "Day 1 - Easter Navigation";
+            return "Day 1: No Time for a Taxicab";
         }
     }
 }
