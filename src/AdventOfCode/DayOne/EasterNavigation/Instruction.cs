@@ -20,5 +20,46 @@ namespace AdventOfCode.DayOne.EasterNavigation
         {
             return string.Format("{0}{1}", turn, magnitude);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            Instruction i = obj as Instruction;
+            if ((object)i == null)
+            {
+                return false;
+            }
+
+            return turn == i.turn && magnitude == i.magnitude;
+        }
+
+        public override int GetHashCode()
+        {
+            return magnitude ^ (int)turn;
+        }
+
+        public static bool operator ==(Instruction a, Instruction b)
+        {
+            if (System.Object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            if ((object)a == null || (object)b == null)
+            {
+                return false;
+            }
+
+            return a.magnitude == b.magnitude && a.turn == b.turn;
+        }
+
+        public static bool operator !=(Instruction a, Instruction b)
+        {
+            return !(a == b);
+        }
     }
 }
