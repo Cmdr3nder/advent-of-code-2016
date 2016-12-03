@@ -1,6 +1,4 @@
-﻿using AdventOfCode.Utils;
-
-namespace AdventOfCode.DayTwo
+﻿namespace AdventOfCode.DayTwo
 {
     public enum Key
     {

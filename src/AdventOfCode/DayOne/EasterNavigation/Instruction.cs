@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AdventOfCode.DayOne.EasterNavigation
+﻿namespace AdventOfCode.DayOne.EasterNavigation
 {
     public class Instruction
     {
@@ -44,7 +39,7 @@ namespace AdventOfCode.DayOne.EasterNavigation
 
         public static bool operator ==(Instruction a, Instruction b)
         {
-            if (System.Object.ReferenceEquals(a, b))
+            if (object.ReferenceEquals(a, b))
             {
                 return true;
             }

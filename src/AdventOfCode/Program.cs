@@ -1,5 +1,7 @@
 ﻿using AdventOfCode.DayOne.EasterNavigation;
 using AdventOfCode.DayTwo;
+using AdventOfCode.DayThree;
+using AdventOfCode.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -14,14 +16,15 @@ namespace AdventOfCode
             var programs = new List<IProgram>();
             programs.Add(new EasterNavigation());
             programs.Add(new BunnyBathroom());
+            programs.Add(new SquareTriangles());
             programs.Add(new QuitMenu());
 
-            var menu = new MenuRunner("Main Menu", "What would you like to do?", programs);
+            var menu = new Menu<IProgram>("What would you like to do?", programs);
 
             var control = Control.Continue;
             while (control != Control.Quit)
             {
-                control = menu.Run();
+                control = menu.Ask().Run();
             }
         }
     }

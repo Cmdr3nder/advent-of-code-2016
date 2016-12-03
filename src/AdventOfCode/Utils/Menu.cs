@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AdventOfCode
+namespace AdventOfCode.Utils
 {
     public class Menu<R>
     {
         private List<R> options;
         private string header;
+        private int max;
 
-        public Menu(string header, List<R> options)
+        public Menu(string header, List<R> options, int max = 40)
         {
             this.header = header;
             this.options = options;
+            this.max = max;
         }
 
         public R Ask()
@@ -28,7 +28,9 @@ namespace AdventOfCode
             Console.WriteLine(header);
             for (int i = 0; i < options.Count; ++i)
             {
-                Console.WriteLine("{0}) {1}", i + 1, options[i]);
+                string opt = options[i].ToString().Replace("\n", "\\n");
+                opt = opt.Length <= max ? opt : string.Format("{0}...", opt.Substring(0, max - 3));
+                Console.WriteLine("{0}) {1}", i + 1, opt);
             }
         }
 

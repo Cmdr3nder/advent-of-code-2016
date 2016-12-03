@@ -5,21 +5,11 @@ using AdventOfCode.Utils;
 
 namespace AdventOfCode.DayOne.EasterNavigation
 {
-    public class EasterNavigation : IProgram, IParameterProgram<string>
+    public class EasterNavigation : IProgram
     {
         public Control Run()
         {
-            var batches = new List<IProgram>();
-            batches.Add(new InputBatch<string>(this, "R2, L3"));
-            batches.Add(new InputBatch<string>(this, "R2, R2, R2"));
-            batches.Add(new InputBatch<string>(this, "R5, L5, R5, R3"));
-            batches.Add(new InputBatch<string>(this, "L5, R1, R4, L5, L4, R3, R1, L1, R4, R5, L1, L3, R4, L2, L4, R2, L4, L1, R3, R1, R1, L1, R1, L5, R5, R2, L5, R2, R1, L2, L4, L4, R191, R2, R5, R1, L1, L2, R5, L2, L3, R4, L1, L1, R1, R50, L1, R1, R76, R5, R4, R2, L5, L3, L5, R2, R1, L1, R2, L3, R4, R2, L1, L1, R4, L1, L1, R185, R1, L5, L4, L5, L3, R2, R3, R1, L5, R1, L3, L2, L2, R5, L1, L1, L3, R1, R4, L2, L1, L1, L3, L4, R5, L2, R3, R5, R1, L4, R5, L3, R3, R3, R1, R1, R5, R2, L2, R5, L5, L4, R4, R3, R5, R1, L3, R1, L2, L2, R3, R4, L1, R4, L1, R4, R3, L1, L4, L1, L5, L2, R2, L1, R1, L5, L3, R4, L1, R5, L5, L5, L1, L3, R1, R5, L2, L4, L5, L1, L1, L2, R5, R5, L4, R3, L2, L1, L3, L4, L5, L5, L2, R4, R3, L5, R4, R2, R1, L5"));
-            var menu = new MenuRunner("Select Input Batch", "Select Input Batch:", batches);
-            return menu.Run();
-        }
-
-        public Control Run(string instructions)
-        {
+            var instructions = InstructionMenu().Ask();
             var position = new Position(0, 0, Cardinal.North);
             var positions = new List<Position>();
             positions.Add(position);
@@ -36,6 +26,16 @@ namespace AdventOfCode.DayOne.EasterNavigation
             }
 
             return Control.Continue;
+        }
+
+        private Menu<string> InstructionMenu()
+        {
+            var inputs = new List<string>();
+            inputs.Add("R2, L3");
+            inputs.Add("R2, R2, R2");
+            inputs.Add("R5, L5, R5, R3");
+            inputs.Add("L5, R1, R4, L5, L4, R3, R1, L1, R4, R5, L1, L3, R4, L2, L4, R2, L4, L1, R3, R1, R1, L1, R1, L5, R5, R2, L5, R2, R1, L2, L4, L4, R191, R2, R5, R1, L1, L2, R5, L2, L3, R4, L1, L1, R1, R50, L1, R1, R76, R5, R4, R2, L5, L3, L5, R2, R1, L1, R2, L3, R4, R2, L1, L1, R4, L1, L1, R185, R1, L5, L4, L5, L3, R2, R3, R1, L5, R1, L3, L2, L2, R5, L1, L1, L3, R1, R4, L2, L1, L1, L3, L4, R5, L2, R3, R5, R1, L4, R5, L3, R3, R3, R1, R1, R5, R2, L2, R5, L5, L4, R4, R3, R5, R1, L3, R1, L2, L2, R3, R4, L1, R4, L1, R4, R3, L1, L4, L1, L5, L2, R2, L1, R1, L5, L3, R4, L1, R5, L5, L5, L1, L3, R1, R5, L2, L4, L5, L1, L1, L2, R5, R5, L4, R3, L2, L1, L3, L4, L5, L5, L2, R4, R3, L5, R4, R2, R1, L5");
+            return new Menu<string>("Select Input:", inputs);
         }
 
         public int BlocksFromOrigin(Position position)
