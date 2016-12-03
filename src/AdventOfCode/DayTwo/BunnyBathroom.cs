@@ -2,28 +2,51 @@
 using System.Text;
 using System.Collections.Generic;
 using AdventOfCode.Utils;
+using Pad = AdventOfCode.Utils.NamedValue<AdventOfCode.DayTwo.Key[,]>;
 
 namespace AdventOfCode.DayTwo
 {
-    public class BunnyBathroom : IProgram, IParameterProgram<string>
+    public class BunnyBathroom : IProgram
     {
         public Control Run()
         {
-            var options = new List<IProgram>();
-            options.Add(new InputBatch<string>(this, "DDDURLURURUDLDURRURULLRRDULRRLRLRURDLRRDUDRUDLRDUUDRRUDLLLURLUURLRURURLRLUDDURUULDURDRUUDLLDDDRLDUULLUDURRLUULUULDLDDULRLDLURURUULRURDULLLURLDRDULLULRRRLRLRULLULRULUUULRLLURURDLLRURRUUUDURRDLURUURDDLRRLUURLRRULURRDDRDULLLDRDDDDURURLLULDDULLRLDRLRRDLLURLRRUDDDRDLLRUDLLLLRLLRUDDLUUDRLRRRDRLRDLRRULRUUDUUDULLRLUDLLDDLLDLUDRURLULDLRDDLDRUDLDDLDDDRLLDUURRUUDLLULLRLDLUURRLLDRDLRRRRUUUURLUUUULRRUDDUDDRLDDURLRLRLLRRUDRDLRLDRRRRRRUDDURUUUUDDUDUDU\nRLULUULRDDRLULRDDLRDUURLRUDDDUULUUUDDRDRRRLDUURDURDRLLLRDDRLURLDRRDLRLUURULUURDRRULRULDULDLRRDDRLDRUDUDDUDDRULURLULUDRDUDDDULRRRURLRRDLRDLDLLRLUULURLDRURRRLLURRRRRLLULRRRDDLRLDDUULDLLRDDRLLUUDRURLRULULRLRUULUUUUUDRURLURLDDUDDLRDDLDRRLDLURULUUDRDLULLURDLLLRRDRURUDDURRLURRDURURDLRUDRULUULLDRLRRDRLDDUDRDLLRURURLUDUURUULDURUDULRLRDLDURRLLDRDUDRUDDRLRURUDDLRRDLLLDULRRDRDRRRLURLDLURRDULDURUUUDURLDLRURRDRULLDDLLLRUULLLLURRRLLLDRRUDDDLURLRRRDRLRDLUUUDDRULLUULDURLDUUURUDRURUDRDLRRLDRURRLRDDLLLULUDDUULDURLRUDRDDD\nRDDRUDLRLDDDRLRRLRRLUULDRLRUUURULRRLUURLLLRLULDDLDLRLULULUUDDDRLLLUDLLRUDURUDDLLDUDLURRULLRDLDURULRLDRLDLDRDDRUDRUULLLLRULULLLDDDULUUDUUDDLDRLRRDLRLURRLLDRLDLDLULRLRDLDLRLUULLDLULRRRDDRUULDUDLUUUUDUDRLUURDURRULLDRURUDURDUULRRULUULULRLDRLRLLRRRLULURLUDULLDRLDRDRULLUUUDLDUUUDLRDULRDDDDDDDDLLRDULLUDRDDRURUDDLURRUULUURURDUDLLRRRRDUDLURLLURURLRDLDUUDRURULRDURDLDRUDLRRLDLDULRRUDRDUUDRLURUURLDLUDLLRDDRDU\nLLDDDDLUDLLDUDURRURLLLLRLRRLDULLURULDULDLDLLDRRDLUDRULLRUUURDRLLURDDLLUDDLRLLRDDLULRLDDRURLUDRDULLRUDDLUURULUUURURLRULRLDLDDLRDLDLLRUURDLUDRRRDDRDRLLUDDRLDRLLLRULRDLLRLRRDDLDRDDDUDUDLUULDLDUDDLRLDUULRULDLDULDDRRLUUURUUUDLRDRULDRRLLURRRDUDULDUDUDULLULLULULURLLRRLDULDULDLRDDRRLRDRLDRLUDLLLUULLRLLRLDRDDRUDDRLLDDLRULLLULRDDDLLLDRDLRULDDDLULURDULRLDRLULDDLRUDDUDLDDDUDRDRULULDDLDLRRDURLLRLLDDURRLRRULLURLRUDDLUURULULURLRUDLLLUDDURRLURLLRLLRRLDULRRUDURLLDDRLDLRRLULUULRRUURRRDULRLRLRDDRDULULUUDULLLLURULURRUDRLL\nUULLULRUULUUUUDDRULLRLDDLRLDDLULURDDLULURDRULUURDLLUDDLDRLUDLLRUURRUDRLDRDDRRLLRULDLLRUUULLLDLDDULDRLRURLDRDUURLURDRUURUULURLRLRRURLDDDLLDDLDDDULRUDLURULLDDRLDLUDURLLLLLRULRRLLUDRUURLLURRLLRDRLLLRRDDDRRRDLRDRDUDDRLLRRDRLRLDDDLURUUUUULDULDRRRRLUDRLRDRUDUDDRULDULULDRUUDUULLUDULRLRRURDLDDUDDRDULLUURLDRDLDDUURULRDLUDDLDURUDRRRDUDRRDRLRLULDRDRLRLRRUDLLLDDDRURDRLRUDRRDDLDRRLRRDLUURLRDRRUDRRDLDDDLRDDLRDUUURRRUULLDDDLLRLDRRLLDDRLRRRLUDLRURULLDULLLUDLDLRLLDDRDRUDLRRDDLUU"));
-            options.Add(new InputBatch<string>(this, "UUL\nRRDDD\nLURDL\nUUUUD"));
-            var menu = new MenuRunner("Select Input Set", "Select Input:", options);
-            return menu.Run();
-        }
+            var input = InputOptions().Ask();
+            var pad = PadOptions().Ask().value;
 
-        public Control Run(string input)
-        {
-            PrintCode(GenerateCode(input));
+            PrintCode(GenerateCode(input, pad, Key.Five));
+
             return Control.Continue;
         }
 
-        public List<Key> GenerateCode(string input)
+        private Menu<string> InputOptions()
         {
+            var options = new List<string>();
+            options.Add("DDDURLURURUDLDURRURULLRRDULRRLRLRURDLRRDUDRUDLRDUUDRRUDLLLURLUURLRURURLRLUDDURUULDURDRUUDLLDDDRLDUULLUDURRLUULUULDLDDULRLDLURURUULRURDULLLURLDRDULLULRRRLRLRULLULRULUUULRLLURURDLLRURRUUUDURRDLURUURDDLRRLUURLRRULURRDDRDULLLDRDDDDURURLLULDDULLRLDRLRRDLLURLRRUDDDRDLLRUDLLLLRLLRUDDLUUDRLRRRDRLRDLRRULRUUDUUDULLRLUDLLDDLLDLUDRURLULDLRDDLDRUDLDDLDDDRLLDUURRUUDLLULLRLDLUURRLLDRDLRRRRUUUURLUUUULRRUDDUDDRLDDURLRLRLLRRUDRDLRLDRRRRRRUDDURUUUUDDUDUDU\nRLULUULRDDRLULRDDLRDUURLRUDDDUULUUUDDRDRRRLDUURDURDRLLLRDDRLURLDRRDLRLUURULUURDRRULRULDULDLRRDDRLDRUDUDDUDDRULURLULUDRDUDDDULRRRURLRRDLRDLDLLRLUULURLDRURRRLLURRRRRLLULRRRDDLRLDDUULDLLRDDRLLUUDRURLRULULRLRUULUUUUUDRURLURLDDUDDLRDDLDRRLDLURULUUDRDLULLURDLLLRRDRURUDDURRLURRDURURDLRUDRULUULLDRLRRDRLDDUDRDLLRURURLUDUURUULDURUDULRLRDLDURRLLDRDUDRUDDRLRURUDDLRRDLLLDULRRDRDRRRLURLDLURRDULDURUUUDURLDLRURRDRULLDDLLLRUULLLLURRRLLLDRRUDDDLURLRRRDRLRDLUUUDDRULLUULDURLDUUURUDRURUDRDLRRLDRURRLRDDLLLULUDDUULDURLRUDRDDD\nRDDRUDLRLDDDRLRRLRRLUULDRLRUUURULRRLUURLLLRLULDDLDLRLULULUUDDDRLLLUDLLRUDURUDDLLDUDLURRULLRDLDURULRLDRLDLDRDDRUDRUULLLLRULULLLDDDULUUDUUDDLDRLRRDLRLURRLLDRLDLDLULRLRDLDLRLUULLDLULRRRDDRUULDUDLUUUUDUDRLUURDURRULLDRURUDURDUULRRULUULULRLDRLRLLRRRLULURLUDULLDRLDRDRULLUUUDLDUUUDLRDULRDDDDDDDDLLRDULLUDRDDRURUDDLURRUULUURURDUDLLRRRRDUDLURLLURURLRDLDUUDRURULRDURDLDRUDLRRLDLDULRRUDRDUUDRLURUURLDLUDLLRDDRDU\nLLDDDDLUDLLDUDURRURLLLLRLRRLDULLURULDULDLDLLDRRDLUDRULLRUUURDRLLURDDLLUDDLRLLRDDLULRLDDRURLUDRDULLRUDDLUURULUUURURLRULRLDLDDLRDLDLLRUURDLUDRRRDDRDRLLUDDRLDRLLLRULRDLLRLRRDDLDRDDDUDUDLUULDLDUDDLRLDUULRULDLDULDDRRLUUURUUUDLRDRULDRRLLURRRDUDULDUDUDULLULLULULURLLRRLDULDULDLRDDRRLRDRLDRLUDLLLUULLRLLRLDRDDRUDDRLLDDLRULLLULRDDDLLLDRDLRULDDDLULURDULRLDRLULDDLRUDDUDLDDDUDRDRULULDDLDLRRDURLLRLLDDURRLRRULLURLRUDDLUURULULURLRUDLLLUDDURRLURLLRLLRRLDULRRUDURLLDDRLDLRRLULUULRRUURRRDULRLRLRDDRDULULUUDULLLLURULURRUDRLL\nUULLULRUULUUUUDDRULLRLDDLRLDDLULURDDLULURDRULUURDLLUDDLDRLUDLLRUURRUDRLDRDDRRLLRULDLLRUUULLLDLDDULDRLRURLDRDUURLURDRUURUULURLRLRRURLDDDLLDDLDDDULRUDLURULLDDRLDLUDURLLLLLRULRRLLUDRUURLLURRLLRDRLLLRRDDDRRRDLRDRDUDDRLLRRDRLRLDDDLURUUUUULDULDRRRRLUDRLRDRUDUDDRULDULULDRUUDUULLUDULRLRRURDLDDUDDRDULLUURLDRDLDDUURULRDLUDDLDURUDRRRDUDRRDRLRLULDRDRLRLRRUDLLLDDDRURDRLRUDRRDDLDRRLRRDLUURLRDRRUDRRDLDDDLRDDLRDUUURRRUULLDDDLLRLDRRLLDDRLRRRLUDLRURULLDULLLUDLDLRLLDDRDRUDLRRDDLUU");
+            options.Add("UUL\nRRDDD\nLURDL\nUUUUD");
+            return new Menu<string>("Select Input:", options);
+        }
+
+        private Menu<Pad> PadOptions()
+        {
+            var options = new List<Pad>();
+            options.Add(new Pad("9-key", new Key[,] {
+                {Key.One, Key.Two, Key.Three},
+                {Key.Four, Key.Five, Key.Six},
+                {Key.Seven, Key.Eight, Key.Nine}
+            }));
+            options.Add(new Pad("Star", new Key[,] {
+                {Key.Empty, Key.Empty, Key.One, Key.Empty, Key.Empty},
+                {Key.Empty, Key.Two, Key.Three, Key.Four, Key.Empty},
+                {Key.Five, Key.Six, Key.Seven, Key.Eight, Key.Nine},
+                {Key.Empty, Key.A, Key.B, Key.C, Key.Empty},
+                {Key.Empty, Key.Empty, Key.D, Key.Empty, Key.Empty}
+            }));
+            return new Menu<Pad>("Select Pad:", options);
+        }
+
+        public List<Key> GenerateCode(string input, Key[,] pad, Key start)
+        {
+            var coord = FindFirst(start, pad);
             var code = new List<Key>();
             var key = Key.Five;
             foreach (var ch in input)
@@ -31,16 +54,20 @@ namespace AdventOfCode.DayTwo
                 switch (ch)
                 {
                     case 'U':
-                        key = KeyUtils.Move(key, Utils.Direction.Up);
+                        coord = Move(coord, Utils.Direction.Up, pad);
+                        key = GetKey(coord, pad);
                         break;
                     case 'D':
-                        key = KeyUtils.Move(key, Utils.Direction.Down);
+                        coord = Move(coord, Utils.Direction.Down, pad);
+                        key = GetKey(coord, pad);
                         break;
                     case 'L':
-                        key = KeyUtils.Move(key, Utils.Direction.Left);
+                        coord = Move(coord, Utils.Direction.Left, pad);
+                        key = GetKey(coord, pad);
                         break;
                     case 'R':
-                        key = KeyUtils.Move(key, Utils.Direction.Right);
+                        coord = Move(coord, Utils.Direction.Right, pad);
+                        key = GetKey(coord, pad);
                         break;
                     case '\n':
                         code.Add(key);
@@ -53,12 +80,78 @@ namespace AdventOfCode.DayTwo
             return code;
         }
 
+        public Coordinate Move(Coordinate coord, Direction direction, Key[,] pad)
+        {
+            var next = Move(coord, direction);
+            var key = GetKey(next, pad);
+
+            if (key != Key.Empty)
+            {
+                return next;
+            }
+
+            return coord;
+        }
+
+        public Coordinate Move(Coordinate coord, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return new Coordinate(coord.x, coord.y - 1);
+                case Direction.Down:
+                    return new Coordinate(coord.x, coord.y + 1);
+                case Direction.Left:
+                    return new Coordinate(coord.x - 1, coord.y);
+                case Direction.Right:
+                    return new Coordinate(coord.x + 1, coord.y);
+                default:
+                    return coord;
+            }
+        }
+
+        public Key GetKey(Coordinate coord, Key[,] pad)
+        {
+            if (coord.x < pad.GetLength(1) && coord.x >= 0 && coord.y < pad.GetLength(0) && coord.y >= 0)
+            {
+                return pad[coord.y, coord.x];
+            }
+
+            return Key.Empty;
+        }
+
+        public Coordinate FindFirst(Key key, Key[,] pad)
+        {
+            Coordinate res = null;
+
+            for (int y = 0; y < pad.GetLength(0) && res == null; ++ y)
+            {
+                for (int x = 0; x < pad.GetLength(1) && res == null; ++x)
+                {
+                    if (pad[y, x] == key)
+                    {
+                        res = new Coordinate(x, y);
+                    }
+                }
+            }
+
+            return res;
+        }
+
         private void PrintCode(List<Key> code)
         {
-            var codeStr = new StringBuilder(code.Count);
+            var codeStr = new StringBuilder();
             foreach (Key key in code)
             {
-                codeStr.Append((int)key);
+                var keyVal = (int)key;
+                if (keyVal < 10)
+                {
+                    codeStr.Append(keyVal);
+                }
+                else
+                {
+                    codeStr.Append(key);
+                }
             }
             Console.WriteLine("The bathroom code is: {0}", codeStr);
         }

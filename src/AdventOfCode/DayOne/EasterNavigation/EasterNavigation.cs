@@ -29,8 +29,11 @@ namespace AdventOfCode.DayOne.EasterNavigation
             Console.WriteLine("You are {0} blocks from your drop point.", blocks);
 
             position = FindRepeatPosition(positions);
-            blocks = BlocksFromOrigin(position);
-            Console.WriteLine("First duplicated position is {0}, which is {1} blocks from your drop point.", position, blocks);
+            if (position != null)
+            {
+                blocks = BlocksFromOrigin(position);
+                Console.WriteLine("First duplicated position is {0}, which is {1} blocks from your drop point.", position, blocks);
+            }
 
             return Control.Continue;
         }

@@ -14,7 +14,11 @@ namespace AdventOfCode.Tests.DayTwo.BunnyBathroomTests
             expected.Add(Key.Nine);
             expected.Add(Key.Eight);
             expected.Add(Key.Five);
-            Assert.Equal(expected, (new BunnyBathroom()).GenerateCode("UUL\nRRDDD\nLURDL\nUUUUD"));
+            Assert.Equal(expected, (new BunnyBathroom()).GenerateCode("UUL\nRRDDD\nLURDL\nUUUUD", new Key[,] {
+                {Key.One, Key.Two, Key.Three},
+                {Key.Four, Key.Five, Key.Six},
+                {Key.Seven, Key.Eight, Key.Nine}
+            }, Key.Five));
         }
     }
 }

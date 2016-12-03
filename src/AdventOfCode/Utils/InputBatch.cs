@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode.Utils
+﻿namespace AdventOfCode.Utils
 {
     public class InputBatch<P> : IProgram
     {
