@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdventOfCode.DayOne.EasterNavigation
+namespace AdventOfCode
 {
-    public enum Direction
+    public interface IParameterProgram<P>
     {
-        North, South, East, West
+        Control Run(P param);
     }
 }

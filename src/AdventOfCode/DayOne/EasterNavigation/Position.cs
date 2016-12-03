@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AdventOfCode.Utils;
 
 namespace AdventOfCode.DayOne.EasterNavigation
 {
     public class Position
     {
-        public Position(int x, int y, Direction facing)
+        public Position(int x, int y, Cardinal facing)
         {
             this.x = x;
             this.y = y;
@@ -16,7 +13,7 @@ namespace AdventOfCode.DayOne.EasterNavigation
 
         public int x { get; }
         public int y { get; }
-        public Direction facing { get; }
+        public Cardinal facing { get; }
 
         public override string ToString()
         {

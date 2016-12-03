@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using AdventOfCode.Utils;
 
 namespace AdventOfCode.DayOne.EasterNavigation
 {
-    public class EasterNavigation : IProgram
+    public class EasterNavigation : IProgram, IParameterProgram<string>
     {
         public Control Run()
         {
             var batches = new List<IProgram>();
-            batches.Add(new InputBatch(this, "L5, R1, R4, L5, L4, R3, R1, L1, R4, R5, L1, L3, R4, L2, L4, R2, L4, L1, R3, R1, R1, L1, R1, L5, R5, R2, L5, R2, R1, L2, L4, L4, R191, R2, R5, R1, L1, L2, R5, L2, L3, R4, L1, L1, R1, R50, L1, R1, R76, R5, R4, R2, L5, L3, L5, R2, R1, L1, R2, L3, R4, R2, L1, L1, R4, L1, L1, R185, R1, L5, L4, L5, L3, R2, R3, R1, L5, R1, L3, L2, L2, R5, L1, L1, L3, R1, R4, L2, L1, L1, L3, L4, R5, L2, R3, R5, R1, L4, R5, L3, R3, R3, R1, R1, R5, R2, L2, R5, L5, L4, R4, R3, R5, R1, L3, R1, L2, L2, R3, R4, L1, R4, L1, R4, R3, L1, L4, L1, L5, L2, R2, L1, R1, L5, L3, R4, L1, R5, L5, L5, L1, L3, R1, R5, L2, L4, L5, L1, L1, L2, R5, R5, L4, R3, L2, L1, L3, L4, L5, L5, L2, R4, R3, L5, R4, R2, R1, L5"));
+            batches.Add(new InputBatch<string>(this, "R2, L3"));
+            batches.Add(new InputBatch<string>(this, "R2, R2, R2"));
+            batches.Add(new InputBatch<string>(this, "R5, L5, R5, R3"));
+            batches.Add(new InputBatch<string>(this, "L5, R1, R4, L5, L4, R3, R1, L1, R4, R5, L1, L3, R4, L2, L4, R2, L4, L1, R3, R1, R1, L1, R1, L5, R5, R2, L5, R2, R1, L2, L4, L4, R191, R2, R5, R1, L1, L2, R5, L2, L3, R4, L1, L1, R1, R50, L1, R1, R76, R5, R4, R2, L5, L3, L5, R2, R1, L1, R2, L3, R4, R2, L1, L1, R4, L1, L1, R185, R1, L5, L4, L5, L3, R2, R3, R1, L5, R1, L3, L2, L2, R5, L1, L1, L3, R1, R4, L2, L1, L1, L3, L4, R5, L2, R3, R5, R1, L4, R5, L3, R3, R3, R1, R1, R5, R2, L2, R5, L5, L4, R4, R3, R5, R1, L3, R1, L2, L2, R3, R4, L1, R4, L1, R4, R3, L1, L4, L1, L5, L2, R2, L1, R1, L5, L3, R4, L1, R5, L5, L5, L1, L3, R1, R5, L2, L4, L5, L1, L1, L2, R5, R5, L4, R3, L2, L1, L3, L4, L5, L5, L2, R4, R3, L5, R4, R2, R1, L5"));
             var menu = new MenuRunner("Select Input Batch", "Select Input Batch:", batches);
             return menu.Run();
         }
 
-        public Control RunBatch(string instructions)
+        public Control Run(string instructions)
         {
-            var position = new Position(0, 0, Direction.North);
+            var position = new Position(0, 0, Cardinal.North);
             var positions = new List<Position>();
             positions.Add(position);
             position = ApplyInstructions(position, ConvertInstructions(instructions), positions);
@@ -43,7 +47,7 @@ namespace AdventOfCode.DayOne.EasterNavigation
 
             for (int i = 0; i < positions.Count && duplicate == null; ++i)
             {
-                duplicate = new Position(positions[i].x, positions[i].y, Direction.North);
+                duplicate = new Position(positions[i].x, positions[i].y, Cardinal.North);
 
                 if (!visited.Contains(duplicate))
                 {
@@ -102,7 +106,7 @@ namespace AdventOfCode.DayOne.EasterNavigation
                 var min = Math.Min(a.y, b.y);
                 for (int y = min + 1; y < max; ++y)
                 {
-                    positions.Add(new Position(a.x, y, Direction.North));
+                    positions.Add(new Position(a.x, y, Cardinal.North));
                 }
             }
             else if (a.y == b.y)
@@ -111,7 +115,7 @@ namespace AdventOfCode.DayOne.EasterNavigation
                 var min = Math.Min(a.x, b.x);
                 for (int x = min + 1; x < max; ++x)
                 {
-                    positions.Add(new Position(x, a.y, Direction.North));
+                    positions.Add(new Position(x, a.y, Cardinal.North));
                 }
             }
         }
@@ -128,16 +132,16 @@ namespace AdventOfCode.DayOne.EasterNavigation
 
             switch (position.facing)
             {
-                case Direction.North:
+                case Cardinal.North:
                     y += magnitude;
                     break;
-                case Direction.South:
+                case Cardinal.South:
                     y -= magnitude;
                     break;
-                case Direction.East:
+                case Cardinal.East:
                     x += magnitude;
                     break;
-                case Direction.West:
+                case Cardinal.West:
                     x -= magnitude;
                     break;
                 default:
@@ -149,31 +153,31 @@ namespace AdventOfCode.DayOne.EasterNavigation
 
         public Position ApplyTurn(Position position, Turn turn)
         {
-            Direction facing = Direction.North;
+            Cardinal facing = Cardinal.North;
 
             switch (position.facing)
             {
-                case Direction.North:
-                    facing = ApplyTurn(turn, Direction.West, Direction.East);
+                case Cardinal.North:
+                    facing = ApplyTurn(turn, Cardinal.West, Cardinal.East);
                     break;
-                case Direction.South:
-                    facing = ApplyTurn(turn, Direction.East, Direction.West);
+                case Cardinal.South:
+                    facing = ApplyTurn(turn, Cardinal.East, Cardinal.West);
                     break;
-                case Direction.East:
-                    facing = ApplyTurn(turn, Direction.North, Direction.South);
+                case Cardinal.East:
+                    facing = ApplyTurn(turn, Cardinal.North, Cardinal.South);
                     break;
-                case Direction.West:
-                    facing = ApplyTurn(turn, Direction.South, Direction.North);
+                case Cardinal.West:
+                    facing = ApplyTurn(turn, Cardinal.South, Cardinal.North);
                     break;
                 default:
-                    facing = Direction.North;
+                    facing = Cardinal.North;
                     break;
             }
 
             return new Position(position.x, position.y, facing);
         }
 
-        public Direction ApplyTurn(Turn turn, Direction left, Direction right)
+        public Cardinal ApplyTurn(Turn turn, Cardinal left, Cardinal right)
         {
             if (Turn.L == turn)
             {
