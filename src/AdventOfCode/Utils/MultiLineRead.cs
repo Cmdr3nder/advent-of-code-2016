@@ -25,6 +25,7 @@ namespace AdventOfCode.Utils
                 last = Console.ReadKey();
             }
 
+            Console.WriteLine();
             return result.ToString();
         }
 
