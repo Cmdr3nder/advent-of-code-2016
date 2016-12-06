@@ -5,6 +5,7 @@ using AdventOfCode.Utils;
 using System;
 using System.Collections.Generic;
 using AdventOfCode.DayFour;
+using AdventOfCode.DayFive;
 
 namespace AdventOfCode
 {
@@ -19,6 +20,7 @@ namespace AdventOfCode
             programs.Add(new BunnyBathroom());
             programs.Add(new SquareTriangles());
             programs.Add(new ObscureSecure());
+            programs.Add(new ChessPass());
             programs.Add(new QuitMenu());
 
             var menu = new Menu<IProgram>("What would you like to do?", programs);
