@@ -5,7 +5,7 @@ namespace AdventOfCode.Utils
 {
     public class MultiLineRead
     {
-        private string header;
+        private readonly string header;
 
         public MultiLineRead(string header)
         {
